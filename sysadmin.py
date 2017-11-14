@@ -42,7 +42,7 @@ def configureLAMP():
     print "Starting Apache2"
     os.system("service apache2 start")
     print "Starting Mysql"
-    os.system("service mtsql start")
+    os.system("service mysql start")
 
 	# On boot enable
     print "Enabling Apache2 and Mysql start on boot"
