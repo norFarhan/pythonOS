@@ -10,7 +10,6 @@ respond = ''
 
 respond = raw_input('are sure want to continue? y to continue n to abort :')
 
-
 def installWget():
     print "Installing wget"
     os.system("apt-get install wget -y")
@@ -27,25 +26,27 @@ def installMysql():
     return
 
 def installPhp():
-    print "Installing php"
-    os.system("apt-get install php php-mysql -y")
+    print "Installing Php and all dependencies"
+    os.system("apt-get install php7.0 libapache2-mod-php7.0 -y")
     return
 
 
 def checkPhp():
     os.system('echo "<?php phpinfo() ?>" > /var/www/html/index.php')
-    print "write index.php"
+    print "Create index.php"
     return
 
 def configureLAMP():
-    os.system("service httpd start")
-    print "start httpd"
-    os.system("service mysqld start")
-    print "start mysqld"
-    os.system("chkconfig httpd on")
-    print "enable httpd on boot"
-    os.system("chkconfig mysqld on")
-    print "enable mysql on boot"
+
+	# Services
+    print "Starting Apache2"
+    os.system("service apache2 start")
+    print "Starting Mysql"
+    os.system("service mtsql start")
+
+	# On boot enable
+    print "Enabling Apache2 and Mysql start on boot"
+    os.system("systemctl enable apache2 && systemctl enable mysql")
     return
 
 if respond == 'y':
@@ -53,7 +54,7 @@ if respond == 'y':
     installApache()
     installMysql()
     installPhp()
-    # configureLAMP()
+    configureLAMP()
     checkPhp()
 
 else: exit(0)
